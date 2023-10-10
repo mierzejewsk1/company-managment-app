@@ -1,22 +1,21 @@
-//require('dotenv').config();
+require('dotenv').config();
 
 const express = require('express');
 
-//routes files
+const userRoutes = require('./routes/user');
 
 const cors = require('cors');
 const app = express();
 
 const corsOptions = {
-  exposedHeaders: 'response-header',
+    exposedHeaders: 'response-header',
 };
 
 app.use(express.json());
 app.use(cors(corsOptions));
 
-// routes
+app.use('/user', userRoutes);
 
 app.listen(process.env.SERVER_PORT, () => {
-  console.log("Listening on port 4000");
+    console.log("Listening on port 4000");
 });
-//TEST COMMIT
