@@ -5,8 +5,7 @@ import { LOCAL_STORAGE } from "./config/Enum";
 import Login from "./pages/Login";
 import ResetPassword from "./pages/ResetPassword";
 import GetNewPassword from "./pages/GetNewPassword";
-import '../dist/output.css';
-
+//import '../dist/output.css';
 
 function App() {
   const { user, isRestoreFinished, authActions } = useAuthContext();
