@@ -1,8 +1,26 @@
-// login page
-
-import { Link } from "react-router-dom"
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { SERVER_CODE } from "../config/Enum";
+import { useAuthContext } from "../hooks/useAuthContext";
+import { fetchData } from "../config/Api";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { authActions } = useAuthContext();
+
+  const Login = async (e) => {
+    e.preventDefault();
+    const response = await fetchData("/user/login", "POST", { email, password }, null, false);
+    if (response[1] !== SERVER_CODE.OK) {
+      console.log(response[2]);
+    } else {
+      const data = await response[0].json();
+      await authActions.login(data);
+    }
+    setPassword("");
+  };
+
   return (
     <div className="bg-gradient-to-r from-sky-300 to-sky-900 h-screen flex justify-center items-center w-screen">
       <div className="flex-col items-center justify-center h-fit max-h-full px-5 py-12 border rounded-xl w-4/5 md:w-3/5 lg:w-2/5 xl:w-1/5">
@@ -10,11 +28,26 @@ const Login = () => {
         <form className="w-full" onSubmit={Login}>
           <label className="w-full my-2 text-white" htmlFor="username">E-mail:</label>
           <br />
-          <input className="w-full my-2 mb-10 p-1 bg-cyan-700 text-white placeholder:text-slate-400 outline-none" type="text" id="username" name="username" pattern="^.+@.+$" placeholder="e-mail" required />
+          <input
+            className="w-full my-2 mb-10 p-1 bg-cyan-700 text-white placeholder:text-slate-400 outline-none"
+            type="text"
+            id="username"
+            name="username"
+            pattern="^.+@.+$"
+            placeholder="e-mail"
+            onChange={(e) => { setEmail(e.target.value) }}
+            required />
           <br />
           <label className="w-full my-2 text-white" htmlFor="password">Hasło:</label>
           <br />
-          <input className="w-full my-2 mb-2 p-1 bg-cyan-700 outline-none text-white placeholder:text-slate-400" type="password" id="password" name="password" placeholder="hasło" required />
+          <input
+            className="w-full my-2 mb-2 p-1 bg-cyan-700 outline-none text-white placeholder:text-slate-400"
+            type="password"
+            id="password"
+            name="password"
+            placeholder="hasło"
+            onChange={(e) => { setPassword(e.target.value); }}
+            required />
           <br />
           <Link to="/reset-password" className="block text-xs underline text-right mb-16 text-white hover:text-white">
             Zapomniałeś hasła?

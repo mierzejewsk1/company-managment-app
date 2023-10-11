@@ -5,6 +5,7 @@ import { LOCAL_STORAGE } from "./config/Enum";
 import Login from "./pages/Login";
 import ResetPassword from "./pages/ResetPassword";
 import GetNewPassword from "./pages/GetNewPassword";
+import Home from "./pages/Home";
 //import '../dist/output.css';
 
 function App() {
