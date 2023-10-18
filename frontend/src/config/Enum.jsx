@@ -11,7 +11,9 @@ export const HOST_ADDRESS = "http://localhost:4000";
 
 export const LOCAL_STORAGE = Object.freeze({
   USER: "user",
-  // different type of users
+  // user types
+  ADMIN: "Admin",
+  WORKER: "Worker"
 })
 
 export const CUSTOM_SERVER_CODE = Object.freeze({
