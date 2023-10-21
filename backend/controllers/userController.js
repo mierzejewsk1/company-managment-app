@@ -18,7 +18,7 @@ const emailRegex = new RegExp(/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'
 const LoginUser = async (req, res) => {
     const { email, password } = req.body;
 
-    if (!emailRegex.test(email)) 
+    if (!emailRegex.test(email))
         return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.INCORRECT_EMAIL_FORMAT).status(StatusCodeEnum.BAD_REQUEST).send();
 
     try {
@@ -30,10 +30,10 @@ const LoginUser = async (req, res) => {
         if (!match)
             return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.INCORRECT_EMAIL_OR_PASSWORD).status(StatusCodeEnum.BAD_REQUEST).send();
 
-        const [ userData ] = await userQuery.FindUserTypeNameById(user.userID);
+        const [userData] = await userQuery.FindUserTypeNameById(user.userID);
         if (userData === undefined)
             return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.USER_HAS_NO_TYPE).status(StatusCodeEnum.BAD_REQUEST).send();
-        const {userTypeName} = userData;
+        const { userTypeName } = userData;
 
         const token = createToken(user.userID, '1d');
         await userQuery.UpdateUserToken(user.userID, token);
@@ -62,7 +62,7 @@ const SendResetPasswordEmailHTML = async (req, res) => {
         return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.USER_DOES_NOT_EXIST).status(StatusCodeEnum.BAD_REQUEST).send();
 
     let userName = user.userName;
-    if (user.userName === undefined || user.userName === undefined )
+    if (user.userName === undefined || user.userName === undefined)
         userName = "Użytkownik";
 
     const resetToken = createToken(user.userID, '15m')
@@ -73,9 +73,9 @@ const SendResetPasswordEmailHTML = async (req, res) => {
     const address = email;
     const subject = 'Reset Hasła';
     const resetLink = `http://localhost:5173/get-new-password/?token=${resetToken}`; //change localhost
-    const html = await mailer.loadTemplate('resetPassword.html',{userName, resetLink} )
- 
-    mailer.sendHTMLMail(sender,address,subject,html);
+    const html = await mailer.loadTemplate('resetPassword.html', { userName, resetLink })
+
+    mailer.sendHTMLMail(sender, address, subject, html);
     return res.status(StatusCodeEnum.OK).json({ msg: 'Email sent succesfully' });
 
 }
@@ -107,7 +107,7 @@ const ResetPassword = async (req, res) => {
         const updateUserResetPasswordToken = userQuery.UpdateUserResetPasswordToken(user.userID, null);
 
         await Promise.all([updateUserPassword, updateUserResetPasswordToken]);
-            
+
         return res.status(StatusCodeEnum.OK).json({ msg: 'Password reset successfully' });
     }
     catch (error) {
@@ -127,29 +127,29 @@ const ValidateLogin = async (req, res) => {
 const CreateEmployee = async (req, res) => {
     const { email, userName, password } = req.body;
     const userID = req.user.userID;
-    if (!emailRegex.test(email)) 
+    if (!emailRegex.test(email))
         return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.INCORRECT_EMAIL_FORMAT).status(StatusCodeEnum.BAD_REQUEST).send();
 
     try {
         const [user] = await userQuery.FindUserById(userID);
 
-        if (user.userTypeID !== 1) 
+        if (user.userTypeID !== 1)
             return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.USER_IS_NOT_ADMIN).status(StatusCodeEnum.UNAUTHORIZED).send();
-        
+
         const [matchingEmail] = await userQuery.FindMatchingEmail(email);
 
-        if(matchingEmail !== null && matchingEmail !== undefined)
+        if (matchingEmail !== null && matchingEmail !== undefined)
             return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.EMAIL_WAS_TAKEN).status(StatusCodeEnum.BAD_REQUEST).send();
-        
+
         const hashedPassword = await bcrypt.hash(password, 10);
-        
-        await userQuery.InsertNewUser(email, userName, 3, hashedPassword);
+
+        await userQuery.InsertNewUser(email, userName, 2, hashedPassword);
 
         return res.status(StatusCodeEnum.OK).json({ msg: 'Standard user was added' });
     }
     catch (error) {
-            console.error(error);
-            return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.SERVER_ERROR).status(StatusCodeEnum.INTERNAL_SERVER_ERROR).send();
+        console.error(error);
+        return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.SERVER_ERROR).status(StatusCodeEnum.INTERNAL_SERVER_ERROR).send();
     }
 }
 
@@ -161,7 +161,7 @@ const DisplayEmployees = async (req, res) => {
         let employeesData = await userQuery.FindUsers();
 
         employeesData = employeesData.filter(employee => employee.userID !== userID);
-        
+
         return res.status(StatusCodeEnum.OK).json({ employeesData });
 
     } catch (error) {
@@ -170,36 +170,22 @@ const DisplayEmployees = async (req, res) => {
     }
 };
 
-const DeleteEmployees = async (req, res) => {
-    const { employeeIDs } = req.body;
+const DeleteEmployee = async (req, res) => {
+    const { employeeID } = req.body;
     const userID = req.user.userID;
 
     try {
         const [user] = await userQuery.FindUserById(userID);
 
-        const employees = await Promise.all(employeeIDs.map(async id => {
-            const [result] = await userQuery.FindUsersByIds(id);
-            return result;
-        }));
+        const [employee] = await userQuery.FindUserById(employeeID);
+        if (employee === undefined)
+            return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.USER_DOES_NOT_EXIST).status(StatusCodeEnum.BAD_REQUEST).send();
 
-        const doesEveryEmployeeExist = employees.every(employee => employee !== undefined);
-
-        if (user.userTypeID !== 1) 
+        if (user.userTypeID !== 1)
             return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.USER_IS_NOT_ADMIN).status(StatusCodeEnum.UNAUTHORIZED).send();
 
-        if (!doesEveryEmployeeExist) 
-            return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.COMPANIES_DOES_NOT_MATCH).status(StatusCodeEnum.BAD_REQUEST).send();
+        await userQuery.DeleteEmployeeById(employeeID);
 
-        //Choose query based on how many users should be deleted
-        if(employeeIDs.length === 1)
-        {
-            const [employeeID] = employeeIDs;
-            await userQuery.DeleteEmployeeById(employeeID);
-        }
-        else if(employeeIDs.length > 1)
-            await userQuery.DeleteEmployeesById(employeeIDs);
-            
-            
         return res.status(StatusCodeEnum.OK).json({ msg: 'Deleted users successfully' });
 
     } catch (error) {
@@ -212,7 +198,7 @@ const EditEmployee = async (req, res) => {
     const { employeeID } = req.body;
 
     const userID = req.user.userID;
-    
+
     let employeeObject = Object.keys(req.body).reduce((object, key) => {
         if (key !== "employeeID") {
             object[key] = req.body[key];
@@ -223,14 +209,14 @@ const EditEmployee = async (req, res) => {
     try {
         const [user] = await userQuery.FindUserById(userID);
 
-        if (user.userTypeID !== 1) 
+        if (user.userTypeID !== 1)
             return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.USER_IS_NOT_ADMIN).status(StatusCodeEnum.UNAUTHORIZED).send();
 
         const [employee] = await userQuery.FindUserById(employeeID);
 
-        if (employee === undefined ) 
+        if (employee === undefined)
             return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.USER_DOES_NOT_EXIST).status(StatusCodeEnum.BAD_REQUEST).send();
-        
+
         await userQuery.UpdateEmployeeById(employeeID, employeeObject);
 
         return res.status(StatusCodeEnum.OK).json({ msg: 'Updated employee successfully' });
@@ -249,6 +235,6 @@ module.exports = {
     ResetPassword,
     CreateEmployee,
     DisplayEmployees,
-    DeleteEmployees,
+    DeleteEmployee,
     EditEmployee
 }
