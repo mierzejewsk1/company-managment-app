@@ -35,7 +35,7 @@ function App() {
             />
             <Route
               path="/home"
-              element={user ? <AdministratorHomepage /> : <Navigate to="/" />}
+              element={user ? (user.userTypeName === LOCAL_STORAGE.ADMIN ? <AdministratorHomepage /> : (user.userTypeName === LOCAL_STORAGE.WORKER ? <Home /> : <Navigate to="/" />)) : <Navigate to="/" />}
             />
             <Route
               path="*"
