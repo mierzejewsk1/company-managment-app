@@ -19,8 +19,8 @@ const createEmployeeFields = [
     'password',
 ];
 
-const deleteEmployeesFields = [
-    'employeeIDs',
+const deleteEmployeeFields = [
+    'employeeID',
 ];
 
 const editEmployeeFields = [
@@ -32,6 +32,6 @@ module.exports = {
     sendResetPasswordEmailHTMLFields,
     resetPasswordFields,
     createEmployeeFields,
-    deleteEmployeesFields,
+    deleteEmployeeFields,
     editEmployeeFields
 };
