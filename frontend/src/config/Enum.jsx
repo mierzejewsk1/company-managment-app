@@ -40,5 +40,7 @@ export const CUSTOM_SERVER_CODE = Object.freeze({
   121: "Nie można dodać pracownika do stanowiska które jest już przypisane",
   122: "Pracownik ma już przypisane stanowisko",
   123: "Stanowiko nie ma przypisanego pracownika",
+  124: "Stanowisko jest już zablokowane",
+  125: "Stanowisko jest już odblokowane",
 });
 
