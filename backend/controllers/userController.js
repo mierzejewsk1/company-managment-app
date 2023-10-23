@@ -227,6 +227,31 @@ const EditEmployee = async (req, res) => {
     }
 };
 
+const DisplayWorkerWithoutWorkspace = async (req, res) => {
+    const userID = req.user.userID;
+    try {
+        const [user] = await userQuery.FindUserById(userID);
+        if (user === undefined)
+            return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.USER_DOES_NOT_EXIST).status(StatusCodeEnum.BAD_REQUEST).send();
+
+        if (user.userTypeID !== 1)
+            return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.USER_IS_NOT_ADMIN).status(StatusCodeEnum.BAD_REQUEST).send();
+
+        const employeesData = await userQuery.FindWorkerWithWorkspace();
+        const usersData = await userQuery.FindUsers();
+
+        const employeesWithoutWorkspace = usersData.filter(user => !employeesData.some(employee => employee.userID === user.userID));
+
+        return res.status(StatusCodeEnum.OK).json({ employeesWithoutWorkspace });
+
+    } catch (error) {
+        console.error(error);
+        return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.SERVER_ERROR).status(StatusCodeEnum.INTERNAL_SERVER_ERROR).send();
+    }
+};
+
+
+
 module.exports = {
     LoginUser,
     LogoutUser,
@@ -236,5 +261,6 @@ module.exports = {
     CreateEmployee,
     DisplayEmployees,
     DeleteEmployee,
-    EditEmployee
+    EditEmployee,
+    DisplayWorkerWithoutWorkspace,
 }

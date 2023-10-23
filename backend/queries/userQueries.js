@@ -56,26 +56,26 @@ const FindMatchingEmail = async userEmail => {
 }
 
 const FindUserTypeNameById = async userID => {
-    let query = `
+  let query = `
       SELECT c.userTypeName
       FROM o_users o
       JOIN c_user_types c ON o.userTypeID = c.userTypeID
       WHERE o.userID = ?
       LIMIT 1
       `;
-    let values = [userID];
-  
-    return await mysql.app.select(query, values);
-  }
+  let values = [userID];
+
+  return await mysql.app.select(query, values);
+}
 
 const FindUsers = async () => {
-    let query = `SELECT userID, userEmail, userTypeID, userName
-        FROM o_users
+  let query = `SELECT u.userID, u.userEmail, u.userTypeID, u.userName, c.userTypeName
+        FROM o_users u JOIN c_user_types c ON u.userTypeID = c.userTypeID;
       `;
-    let values = [];
-  
-    return await mysql.app.select(query, values);
-  }
+  let values = [];
+
+  return await mysql.app.select(query, values);
+}
 
 const UpdateUserToken = async (userID, userToken) => {
   let query = `
@@ -123,12 +123,12 @@ const UpdateEmployeeById = async (
   return await mysql.app.update(query, values);
 }
 
-const InsertNewUser = async (userEmail, userName, userTypeID, userPassword ) => {
+const InsertNewUser = async (userEmail, userName, userTypeID, userPassword) => {
   let query = `
     INSERT INTO o_users (userEmail, userName, userTypeID, userPassword  )
     VALUES ?
   `;
-  let values = [[[userEmail, userName, userTypeID, userPassword ]]];
+  let values = [[[userEmail, userName, userTypeID, userPassword]]];
 
   return await mysql.app.insert(query, values);
 }
@@ -151,6 +151,16 @@ const DeleteEmployeesById = async (employeeIDs) => {
   return await mysql.app.delete(query, values);
 }
 
+const FindWorkerWithWorkspace = async () => {
+  let query = `
+    SELECT userID
+    FROM o_workspaces 
+    WHERE userID IS NOT NULL;
+    `;
+
+  return await mysql.app.select(query);
+}
+
 module.exports = {
   FindUserWithEmail,
   FindUserById,
@@ -165,5 +175,6 @@ module.exports = {
   UpdateEmployeeById,
   InsertNewUser,
   DeleteEmployeeById,
-  DeleteEmployeesById 
+  DeleteEmployeesById,
+  FindWorkerWithWorkspace,
 }

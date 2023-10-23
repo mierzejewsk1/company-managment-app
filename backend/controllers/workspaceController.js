@@ -91,8 +91,73 @@ const DeleteEmployeeFromWorkspace = async (req, res) => {
   }
 }
 
+const BlockWorkspace = async (req, res) => {
+  const userID = req.user.userID;
+  const { workspaceID } = req.body;
+  try {
+    const [user] = await userQuery.FindUserById(userID);
+    if (user === undefined)
+      return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.USER_DOES_NOT_EXIST).status(StatusCodeEnum.BAD_REQUEST).send();
+
+    if (typeof workspaceID != "number")
+      return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.PARAM_TYPE_IS_INAPPROPRIATE).status(StatusCodeEnum.BAD_REQUEST).send();
+
+    if (user.userTypeID !== 1)
+      return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.USER_IS_NOT_ADMIN).status(StatusCodeEnum.BAD_REQUEST).send();
+
+    const [workspace] = await workspaceQuery.FindWorkspaceByWorkspaceId(workspaceID);
+    if (workspace === undefined)
+      return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.WORKSPACE_DOES_NOT_EXIST).status(StatusCodeEnum.BAD_REQUEST).send();
+
+    const { isAvailable } = workspace;
+    if (isAvailable === 0)
+      return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.WORKSPACE_IS_ALREADY_UNAVAILABLE).status(StatusCodeEnum.BAD_REQUEST).send();
+
+    await workspaceQuery.UpdateWorkspaceAvailability(workspaceID, 0);
+
+    return res.status(StatusCodeEnum.OK).json({ msg: "Usunięto pracownika z wybranego stanowiska." });
+  } catch (error) {
+    console.error(error);
+    return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.SERVER_ERROR).status(StatusCodeEnum.INTERNAL_SERVER_ERROR).send();
+  }
+}
+
+const UnblockWorkspace = async (req, res) => {
+  const userID = req.user.userID;
+  const { workspaceID } = req.body;
+  try {
+    const [user] = await userQuery.FindUserById(userID);
+    if (user === undefined)
+      return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.USER_DOES_NOT_EXIST).status(StatusCodeEnum.BAD_REQUEST).send();
+
+    if (typeof workspaceID != "number")
+      return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.PARAM_TYPE_IS_INAPPROPRIATE).status(StatusCodeEnum.BAD_REQUEST).send();
+
+    if (user.userTypeID !== 1)
+      return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.USER_IS_NOT_ADMIN).status(StatusCodeEnum.BAD_REQUEST).send();
+
+    const [workspace] = await workspaceQuery.FindWorkspaceByWorkspaceId(workspaceID);
+    if (workspace === undefined)
+      return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.WORKSPACE_DOES_NOT_EXIST).status(StatusCodeEnum.BAD_REQUEST).send();
+
+    const { isAvailable } = workspace;
+    if (isAvailable === 1)
+      return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.WORKSPACE_IS_ALREADY_AVAILABLE).status(StatusCodeEnum.BAD_REQUEST).send();
+
+    await workspaceQuery.UpdateWorkspaceAvailability(workspaceID, 1);
+
+    return res.status(StatusCodeEnum.OK).json({ msg: "Usunięto pracownika z wybranego stanowiska." });
+  } catch (error) {
+    console.error(error);
+    return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.SERVER_ERROR).status(StatusCodeEnum.INTERNAL_SERVER_ERROR).send();
+  }
+}
+
+
 module.exports = {
   DisplayWorkspaces,
   AssignEmployeeToWorkspace,
   DeleteEmployeeFromWorkspace,
+  BlockWorkspace,
+  UnblockWorkspace
 }
