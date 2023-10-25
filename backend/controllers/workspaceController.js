@@ -14,7 +14,6 @@ const DisplayWorkspaces = async (req, res) => {
       return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.USER_IS_NOT_ADMIN).status(StatusCodeEnum.BAD_REQUEST).send();
 
     let workspacesData = await workspaceQuery.FindWorkspaces();
-
     return res.status(StatusCodeEnum.OK).json({ workspacesData });
 
   } catch (error) {

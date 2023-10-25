@@ -7,6 +7,7 @@ import ResetPassword from "./pages/ResetPassword";
 import GetNewPassword from "./pages/GetNewPassword";
 import Home from "./pages/Home";
 import AdministratorHomepage from "./pages/AdministratorHomepage";
+import WorkspaceManagmentPage from "./pages/WorkspaceManagmentPage";
 //import '../dist/output.css';
 
 function App() {
@@ -36,6 +37,10 @@ function App() {
             <Route
               path="/home"
               element={user ? (user.userTypeName === LOCAL_STORAGE.ADMIN ? <AdministratorHomepage /> : (user.userTypeName === LOCAL_STORAGE.WORKER ? <Home /> : <Navigate to="/" />)) : <Navigate to="/" />}
+            />
+            <Route
+              path="/workspaces"
+              element={user ? (user.userTypeName === LOCAL_STORAGE.ADMIN ? <WorkspaceManagmentPage /> : (user.userTypeName === LOCAL_STORAGE.WORKER ? <Home /> : <Navigate to="/" />)) : <Navigate to="/" />}
             />
             <Route
               path="*"
