@@ -42,5 +42,7 @@ export const CUSTOM_SERVER_CODE = Object.freeze({
   123: "Stanowiko nie ma przypisanego pracownika",
   124: "Stanowisko jest już zablokowane",
   125: "Stanowisko jest już odblokowane",
+  126: "Typ uzytkownika nie istnieje",
+  127: "Ogłoszenie o podanym ID nie istnieje",
 });
 
