@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Paź 22, 2023 at 06:07 PM
+-- Generation Time: Paź 27, 2023 at 03:14 PM
 -- Wersja serwera: 10.4.28-MariaDB
 -- Wersja PHP: 8.2.4
 
@@ -20,6 +20,27 @@ SET time_zone = "+00:00";
 --
 -- Database: `company_managment`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `c_target_groups`
+--
+
+CREATE TABLE `c_target_groups` (
+  `targetGroupID` tinyint(3) UNSIGNED NOT NULL,
+  `targetGroupName` tinytext NOT NULL,
+  `insertTimestamp` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `c_target_groups`
+--
+
+INSERT INTO `c_target_groups` (`targetGroupID`, `targetGroupName`, `insertTimestamp`) VALUES
+(1, 'Wszyscy', '2023-10-25 16:01:13'),
+(2, 'Administratorzy', '2023-10-25 16:01:13'),
+(3, 'Pracownicy', '2023-10-25 16:01:13');
 
 -- --------------------------------------------------------
 
@@ -44,6 +65,28 @@ INSERT INTO `c_user_types` (`userTypeID`, `userTypeName`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla tabeli `o_news`
+--
+
+CREATE TABLE `o_news` (
+  `newsID` int(10) UNSIGNED NOT NULL,
+  `newsDescription` mediumtext NOT NULL,
+  `targetGroupID` tinyint(4) NOT NULL,
+  `userID` int(10) UNSIGNED NOT NULL,
+  `insertTimestamp` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `o_news`
+--
+
+INSERT INTO `o_news` (`newsID`, `newsDescription`, `targetGroupID`, `userID`, `insertTimestamp`) VALUES
+(1, 'Ogłoszenie tylko dla administratorów. Zwykli użytkownicy nie powinni tego widzieć', 2, 3, '2023-10-25 16:05:32'),
+(2, 'Ogłoszenie dla wszystkich pracowników. Powinni to widzieć administratorzy oraz zwykli pracownicy', 1, 3, '2023-10-25 16:05:32');
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabeli dla tabeli `o_users`
 --
 
@@ -62,12 +105,13 @@ CREATE TABLE `o_users` (
 --
 
 INSERT INTO `o_users` (`userID`, `userEmail`, `userPassword`, `userToken`, `userResetPasswordToken`, `userTypeID`, `userName`) VALUES
-(1, 'user1@example.com', '$2a$10$qYDGMo0kud3YCclCZsxM4OfV6MeTiwMveoenoHOLeiSxpDiWpWLPa', NULL, 'resetToken1', 1, 'UserName1'),
+(1, 'user1@example.com', '$2a$10$qYDGMo0kud3YCclCZsxM4OfV6MeTiwMveoenoHOLeiSxpDiWpWLPa', NULL, 'resetToken1', 1, 'Marcin Mierzej'),
 (2, 'user2@example.com', 'hashedPassword2', 'randomToken2', 'resetToken2', 2, 'UserName2'),
-(3, 'user3@example.com', '$2a$12$Y5rO4nwzrylAfExxFl9QQeLw1oDDXgafLBaGAybGIbLMjv1jzT/eS', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsImlhdCI6MTY5Nzk3NzYxMiwiZXhwIjoxNjk4MDY0MDEyfQ.kdJJSJQ43w2ZBrR2gPAhCMbJosw2ZjdhlinnJXOBwOg', 'resetToken3', 1, 'UserName3'),
+(3, 'user3@example.com', '$2a$12$Y5rO4nwzrylAfExxFl9QQeLw1oDDXgafLBaGAybGIbLMjv1jzT/eS', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsImlhdCI6MTY5ODQwODU3NywiZXhwIjoxNjk4NDk0OTc3fQ.pAHkFf6LmaBN23GdxMpzV8Dh8mUIUqiUalxeUqq8FM4', 'resetToken3', 1, 'UserName3'),
 (4, 'user4@example.com', 'hashedPassword4', 'randomToken4', 'resetToken4', 2, 'UserName4'),
 (7, 'user5@example.com', '$2b$10$royxE56XhVsb1LS9wtN3ZOIZjeoBhINK8QpCCD6oe5myyNdicQQDe', NULL, NULL, 2, 'Marcin'),
-(8, 'user6@example.com', '$2b$10$3nJ8WaRzXVcqlKAFeMJhh.R2lDpCgkp3/39gaNyXan7pHJxZeV.HO', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjgsImlhdCI6MTY5NzkxMTkyMSwiZXhwIjoxNjk3OTk4MzIxfQ.Nq9UbRm2vnuUkKmWsfjiyLPQg2OIxZZIsQmzJAgwhiU', NULL, 2, 'Jakub');
+(8, 'user6@example.com', '$2b$10$3nJ8WaRzXVcqlKAFeMJhh.R2lDpCgkp3/39gaNyXan7pHJxZeV.HO', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjgsImlhdCI6MTY5NzkxMTkyMSwiZXhwIjoxNjk3OTk4MzIxfQ.Nq9UbRm2vnuUkKmWsfjiyLPQg2OIxZZIsQmzJAgwhiU', NULL, 2, 'Jakub'),
+(14, 'testowy@example.com', '$2b$10$u3aIgIfT71AtiwzQ7QJk2updbHseQ0.rZOtC6CgJhIt9r/K3ZPoPm', NULL, NULL, 2, 'testowy');
 
 -- --------------------------------------------------------
 
@@ -79,6 +123,7 @@ CREATE TABLE `o_workspaces` (
   `workspaceID` smallint(5) UNSIGNED NOT NULL,
   `userID` int(10) UNSIGNED DEFAULT NULL,
   `workspaceNumber` smallint(6) NOT NULL,
+  `isAvailable` tinyint(1) UNSIGNED NOT NULL DEFAULT 1,
   `insertTimestamp` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -86,21 +131,27 @@ CREATE TABLE `o_workspaces` (
 -- Dumping data for table `o_workspaces`
 --
 
-INSERT INTO `o_workspaces` (`workspaceID`, `userID`, `workspaceNumber`, `insertTimestamp`) VALUES
-(1, 2, 1, '2023-10-22 12:07:43'),
-(2, NULL, 2, '2023-10-22 12:07:43'),
-(3, NULL, 3, '2023-10-22 12:07:43'),
-(4, NULL, 4, '2023-10-22 12:07:43'),
-(5, NULL, 5, '2023-10-22 12:07:43'),
-(6, NULL, 6, '2023-10-22 12:07:43'),
-(7, NULL, 7, '2023-10-22 12:07:43'),
-(8, NULL, 8, '2023-10-22 12:07:43'),
-(9, NULL, 9, '2023-10-22 12:07:43'),
-(10, NULL, 10, '2023-10-22 12:07:43');
+INSERT INTO `o_workspaces` (`workspaceID`, `userID`, `workspaceNumber`, `isAvailable`, `insertTimestamp`) VALUES
+(1, 2, 1, 1, '2023-10-22 12:07:43'),
+(2, NULL, 2, 1, '2023-10-22 12:07:43'),
+(3, NULL, 3, 1, '2023-10-22 12:07:43'),
+(4, NULL, 4, 1, '2023-10-22 12:07:43'),
+(5, NULL, 5, 1, '2023-10-22 12:07:43'),
+(6, 7, 6, 1, '2023-10-22 12:07:43'),
+(7, NULL, 7, 1, '2023-10-22 12:07:43'),
+(8, NULL, 8, 1, '2023-10-22 12:07:43'),
+(9, NULL, 9, 1, '2023-10-22 12:07:43'),
+(10, NULL, 10, 1, '2023-10-22 12:07:43');
 
 --
 -- Indeksy dla zrzutów tabel
 --
+
+--
+-- Indeksy dla tabeli `c_target_groups`
+--
+ALTER TABLE `c_target_groups`
+  ADD PRIMARY KEY (`targetGroupID`);
 
 --
 -- Indeksy dla tabeli `c_user_types`
@@ -108,6 +159,12 @@ INSERT INTO `o_workspaces` (`workspaceID`, `userID`, `workspaceNumber`, `insertT
 ALTER TABLE `c_user_types`
   ADD PRIMARY KEY (`userTypeID`),
   ADD UNIQUE KEY `userTypeName` (`userTypeName`);
+
+--
+-- Indeksy dla tabeli `o_news`
+--
+ALTER TABLE `o_news`
+  ADD PRIMARY KEY (`newsID`);
 
 --
 -- Indeksy dla tabeli `o_users`
@@ -129,16 +186,28 @@ ALTER TABLE `o_workspaces`
 --
 
 --
+-- AUTO_INCREMENT for table `c_target_groups`
+--
+ALTER TABLE `c_target_groups`
+  MODIFY `targetGroupID` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `c_user_types`
 --
 ALTER TABLE `c_user_types`
   MODIFY `userTypeID` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `o_news`
+--
+ALTER TABLE `o_news`
+  MODIFY `newsID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `o_users`
 --
 ALTER TABLE `o_users`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `o_workspaces`
