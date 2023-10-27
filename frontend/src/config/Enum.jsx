@@ -44,5 +44,7 @@ export const CUSTOM_SERVER_CODE = Object.freeze({
   125: "Stanowisko jest już odblokowane",
   126: "Typ uzytkownika nie istnieje",
   127: "Ogłoszenie o podanym ID nie istnieje",
+  128: "Wiadomośc o podanym ID nie istnieje",
+  129: "Nie możesz wykonać tej czynności",
 });
 
