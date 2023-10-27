@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Paź 27, 2023 at 03:14 PM
+-- Generation Time: Paź 27, 2023 at 06:43 PM
 -- Wersja serwera: 10.4.28-MariaDB
 -- Wersja PHP: 8.2.4
 
@@ -65,6 +65,29 @@ INSERT INTO `c_user_types` (`userTypeID`, `userTypeName`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla tabeli `o_messages`
+--
+
+CREATE TABLE `o_messages` (
+  `messageID` int(10) UNSIGNED NOT NULL,
+  `userID` int(10) UNSIGNED NOT NULL,
+  `recipientID` int(10) UNSIGNED NOT NULL,
+  `messageDescription` text NOT NULL,
+  `insertTimestamp` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `o_messages`
+--
+
+INSERT INTO `o_messages` (`messageID`, `userID`, `recipientID`, `messageDescription`, `insertTimestamp`) VALUES
+(2, 3, 14, 'A to kolejna wiadomość w konwersacji do mojego ziomeczka', '2023-10-27 15:47:51'),
+(3, 14, 3, 'A to jest wiadomość do admina o id 3 czyli w drugą strone', '2023-10-27 15:51:03'),
+(6, 2, 4, 'wwewww', '2023-10-27 16:38:22');
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabeli dla tabeli `o_news`
 --
 
@@ -107,7 +130,7 @@ CREATE TABLE `o_users` (
 INSERT INTO `o_users` (`userID`, `userEmail`, `userPassword`, `userToken`, `userResetPasswordToken`, `userTypeID`, `userName`) VALUES
 (1, 'user1@example.com', '$2a$10$qYDGMo0kud3YCclCZsxM4OfV6MeTiwMveoenoHOLeiSxpDiWpWLPa', NULL, 'resetToken1', 1, 'Marcin Mierzej'),
 (2, 'user2@example.com', 'hashedPassword2', 'randomToken2', 'resetToken2', 2, 'UserName2'),
-(3, 'user3@example.com', '$2a$12$Y5rO4nwzrylAfExxFl9QQeLw1oDDXgafLBaGAybGIbLMjv1jzT/eS', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsImlhdCI6MTY5ODQwODU3NywiZXhwIjoxNjk4NDk0OTc3fQ.pAHkFf6LmaBN23GdxMpzV8Dh8mUIUqiUalxeUqq8FM4', 'resetToken3', 1, 'UserName3'),
+(3, 'user3@example.com', '$2a$12$Y5rO4nwzrylAfExxFl9QQeLw1oDDXgafLBaGAybGIbLMjv1jzT/eS', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsImlhdCI6MTY5ODQyMjMxMywiZXhwIjoxNjk4NTA4NzEzfQ.YKkuyU2iU2fNXVZh_B7CeigeZNMp2KjAUK4tR0BlNOg', 'resetToken3', 1, 'UserName3'),
 (4, 'user4@example.com', 'hashedPassword4', 'randomToken4', 'resetToken4', 2, 'UserName4'),
 (7, 'user5@example.com', '$2b$10$royxE56XhVsb1LS9wtN3ZOIZjeoBhINK8QpCCD6oe5myyNdicQQDe', NULL, NULL, 2, 'Marcin'),
 (8, 'user6@example.com', '$2b$10$3nJ8WaRzXVcqlKAFeMJhh.R2lDpCgkp3/39gaNyXan7pHJxZeV.HO', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjgsImlhdCI6MTY5NzkxMTkyMSwiZXhwIjoxNjk3OTk4MzIxfQ.Nq9UbRm2vnuUkKmWsfjiyLPQg2OIxZZIsQmzJAgwhiU', NULL, 2, 'Jakub'),
@@ -161,6 +184,12 @@ ALTER TABLE `c_user_types`
   ADD UNIQUE KEY `userTypeName` (`userTypeName`);
 
 --
+-- Indeksy dla tabeli `o_messages`
+--
+ALTER TABLE `o_messages`
+  ADD PRIMARY KEY (`messageID`);
+
+--
 -- Indeksy dla tabeli `o_news`
 --
 ALTER TABLE `o_news`
@@ -196,6 +225,12 @@ ALTER TABLE `c_target_groups`
 --
 ALTER TABLE `c_user_types`
   MODIFY `userTypeID` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `o_messages`
+--
+ALTER TABLE `o_messages`
+  MODIFY `messageID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `o_news`
