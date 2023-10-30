@@ -39,7 +39,7 @@ const AssignEmployeeToWorkspace = async (req, res) => {
     const [employee] = await userQuery.FindUserById(employeeID);
     if (employee === undefined)
       return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.USER_DOES_NOT_EXIST).status(StatusCodeEnum.BAD_REQUEST).send();
-
+      
     const [workspace] = await workspaceQuery.FindWorkspaceByWorkspaceId(workspaceID);
     if (workspace === undefined)
       return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.WORKSPACE_DOES_NOT_EXIST).status(StatusCodeEnum.BAD_REQUEST).send();
