@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
 import WorkspaceModal from './WorkspaceModal';
 
-function WorkspaceQubicle({ workspace }) {
-    const [isFormVisible, setIsFormVisible] = useState(false);
-    const backgroundColor = workspace.userID ? 'bg-gray-200' : 'bg-green-200';
+function WorkspaceQubicle({ 
+    workspace, 
+    employeeData, 
+    addEmployeeToWorkspace, 
+    deleteEmployeeFromWorkspace, 
+    displayAvailableEmployees, 
+    blockWorkSpace, 
+    unBlockWorkSpace }) {
 
+    const [isFormVisible, setIsFormVisible] = useState(false);
+    let backgroundColor = workspace.userID ? 'bg-gray-400' : 'bg-green-400';
+    backgroundColor = workspace.isAvailable === 1 ? backgroundColor: 'bg-red-400';
     const handleClick = () => {
+        displayAvailableEmployees();
         setIsFormVisible(true);
-        console.log(workspace.workspaceID);
     };
 
     return (
@@ -31,7 +39,16 @@ function WorkspaceQubicle({ workspace }) {
                 </div>
             </article>
 
-            <WorkspaceModal show={isFormVisible} workspace={workspace} onClose={() => setIsFormVisible(false)} />
+            <WorkspaceModal 
+                show={isFormVisible} 
+                workspace={workspace} 
+                employeeData={employeeData} 
+                addEmployeeToWorkspace={addEmployeeToWorkspace} 
+                deleteEmployeeFromWorkspace={deleteEmployeeFromWorkspace}
+                blockWorkSpace={blockWorkSpace}
+                unBlockWorkSpace={unBlockWorkSpace}
+                onClose={() => setIsFormVisible(false)} 
+            />
         </>
     );
 }
