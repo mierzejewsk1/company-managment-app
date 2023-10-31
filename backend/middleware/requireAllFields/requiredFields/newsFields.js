@@ -1,4 +1,4 @@
-const addNews = ["newsDescription", "targetGroupId"];
+const addNews = ["newsDescription", "targetGroupID"];
 
 const deleteNews = ["newsID"];
 
