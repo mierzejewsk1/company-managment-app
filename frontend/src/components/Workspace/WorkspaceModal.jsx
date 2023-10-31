@@ -44,14 +44,14 @@ function WorkspaceModal({
                 &#8203;
               </span>
               <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full w-full">
-                <div className="flex flex-row justify-between items-center p-4">
-                  <h3 className="font-semibold text-gray-900 uppercase truncate">
+                <div className="flex flex-col sm:flex-row justify-between items-center p-4">
+                  <h3 className="font-semibold text-gray-900 uppercase truncate mb-3 sm:mb-0">
                     Szczegóły stanowiska
                   </h3>
                  { workspace.isAvailable === 1 ? (
                   <button
                     type="button"
-                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    className="w-3/4 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => blockWorkSpace(workspace.workspaceID)}
                   >
                     
@@ -60,7 +60,7 @@ function WorkspaceModal({
                   ) : (
                     <button
                     type="button"
-                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    className="w-3/4 inline-flex justify-center rounded-md border border-transparent shadow-sm  px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm "
                     onClick={() => unBlockWorkSpace(workspace.workspaceID)}
                     >
                     
@@ -93,17 +93,17 @@ function WorkspaceModal({
 
                 </div>
 
-                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <div className="bg-gray-50 px-4 py-3 flex flex-col-reverse items-center sm:px-6 sm:flex sm:flex-row-reverse sm:justify-start">
                   <button
                     type="button"
-                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    className="w-3/4 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm mt-3 sm:mt-0"
                     onClick={onClose}
                   >
                     Zamknij
                   </button>
                   <button
                     type="button"
-                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    className="w-3/4 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm mt-3 sm:mt-0"
                     onClick={() => {deleteEmployeeFromWorkspace(workspace.workspaceID); onClose()}}
                   >
                     Usuń pracownika ze stanowiska
@@ -130,15 +130,15 @@ function WorkspaceModal({
                   &#8203;
                 </span>
                 <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full w-full">
-                  <div className="flex flex-row justify-between items-center p-4">
-                    <h3 className="font-semibold text-gray-900 uppercase truncate">
+                  <div className="flex flex-col sm:flex-row justify-between items-center p-4">
+                    <h3 className="font-semibold text-gray-900 uppercase truncate mb-3 sm:mb-0">
                       Szczegóły stanowiska
                     </h3>
 
                     { workspace.isAvailable === 1 ? (
                   <button
                     type="button"
-                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    className="w-3/4 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => blockWorkSpace(workspace.workspaceID)}
                   >
                     
@@ -147,7 +147,7 @@ function WorkspaceModal({
                   ) : (
                     <button
                     type="button"
-                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    className="w-3/4 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => unBlockWorkSpace(workspace.workspaceID)}
                     >
                     
@@ -172,22 +172,23 @@ function WorkspaceModal({
                     </select>
                   </div>
 
-                  <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                  <div className="bg-gray-50 px-4 py-3 flex flex-col-reverse items-center sm:px-6 sm:flex sm:flex-row-reverse sm:justify-start">
                     <button
                       type="button"
-                      className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                      className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm mt-3 sm:mt-0"
                       onClick={onClose}
                     >
                       Zamknij
                     </button>
                     <button
                       type="button"
-                      className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                      className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm mt-3 sm:mt-0"
                       onClick={() => {addEmployeeToWorkspace(parseInt(selectedOption), workspace.workspaceID); onClose()}}
                     >
                       Zapisz
                     </button>
                   </div>
+
                 </div>
               </div>
             </div>

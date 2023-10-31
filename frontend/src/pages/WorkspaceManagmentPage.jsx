@@ -10,11 +10,14 @@ const WorkspaceManagmentPage = () => {
   const { user } = useAuthContext();
   const { logout } = useLogout();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [workspacesData, setWorkspacesData] = useState([]);
   const [isWorkspacesDataEmpty, setIsWorkspacesDataEmpty] = useState(true);
   const [employeeData, setEmployeeData] = useState([]);
   const [isEmployeeDataEmpty, setIsEmployeeDataEmpty] = useState(true);
 
+  const [msg, setMsg] = useState("");
+  
   const handleResize = () => {
     setWindowWidth(window.innerWidth);
     if (window.innerWidth > 765) {
@@ -124,7 +127,7 @@ const WorkspaceManagmentPage = () => {
 
   useEffect(() => {
     DisplayWorkspaces();
-    DisplayAvailableEmployees(); //could be better optimized if it was called after clicking workspace but w/e
+    DisplayAvailableEmployees(); 
   }, [])
 
   const pairedWorkspacesData = [];
