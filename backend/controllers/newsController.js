@@ -30,22 +30,22 @@ const DisplayNews = async (req, res) => {
 // function to add news, only admin can add news
 const AddNews = async (req, res) => {
   const userID = req.user.userID;
-  const { newsDescription, targetGroupId } = req.body;
+  const { newsDescription, targetGroupID } = req.body;
   try {
     const [user] = await userQuery.FindUserById(userID);
     if (user === undefined)
       return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.USER_DOES_NOT_EXIST).status(StatusCodeEnum.BAD_REQUEST).send();
 
-    if (typeof newsDescription != "string" || typeof targetGroupId != "number")
+    if (typeof newsDescription != "string" || typeof targetGroupID != "number")
       return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.PARAM_TYPE_IS_INAPPROPRIATE).status(StatusCodeEnum.BAD_REQUEST).send();
 
     if (user.userTypeID !== 1)
       return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.USER_IS_NOT_ADMIN).status(StatusCodeEnum.BAD_REQUEST).send();
 
-    if (targetGroupId !== 1 && targetGroupId !== 2)
+    if (targetGroupID !== 1 && targetGroupID !== 2)
       return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.TYPE_OF_USER_DO_NOT_EXIST).status(StatusCodeEnum.BAD_REQUEST).send();
 
-    await newsQuery.InsertNews(newsDescription, targetGroupId, userID);
+    await newsQuery.InsertNews(newsDescription, targetGroupID, userID);
 
     return res.status(StatusCodeEnum.OK).json({ msg: "Dodano nowe ogłoszenie." });
   } catch (error) {
