@@ -166,6 +166,37 @@ INSERT INTO `o_workspaces` (`workspaceID`, `userID`, `workspaceNumber`, `isAvail
 (9, NULL, 9, 1, '2023-10-22 12:07:43'),
 (10, NULL, 10, 1, '2023-10-22 12:07:43');
 
+-- Tabela o_tasks
+
+CREATE TABLE o_tasks (
+    taskID INT AUTO_INCREMENT PRIMARY KEY,
+    taskDescription VARCHAR(255) NOT NULL,
+    taskEndDate DATE,
+    userID INT,
+    taskState TINYINT,
+    FOREIGN KEY (userID) REFERENCES o_users(userID)
+);
+
+
+INSERT INTO o_tasks (taskDescription, taskEndDate, userID, taskState) VALUES
+('Opis zadania 1 dla user1', '2023-11-10', 1, 0),
+('Opis zadania 2 dla user1', '2023-11-15', 1, 1),
+('Opis zadania 1 dla user2', '2023-11-12', 2, 0),
+('Opis zadania 2 dla user2', '2023-11-17', 2, 1),
+('Opis zadania 1 dla user3', '2023-11-13', 3, 0),
+('Opis zadania 2 dla user3', '2023-11-18', 3, 1),
+('Opis zadania 1 dla user4', '2023-11-14', 4, 0),
+('Opis zadania 2 dla user4', '2023-11-19', 4, 1),
+('Opis zadania 1 dla user5', '2023-11-15', 7, 0),
+('Opis zadania 2 dla user5', '2023-11-20', 7, 1),
+('Opis zadania 1 dla user6', '2023-11-16', 8, 0),
+('Opis zadania 2 dla user6', '2023-11-21', 8, 1),
+('Opis zadania 1 dla testowy', '2023-11-17', 14, 0),
+('Opis zadania 2 dla testowy', '2023-11-22', 14, 1),
+('Opis zadania 1 dla pies', '2023-11-18', 15, 0),
+('Opis zadania 2 dla pies', '2023-11-23', 15, 1);
+
+
 --
 -- Indeksy dla zrzutów tabel
 --
