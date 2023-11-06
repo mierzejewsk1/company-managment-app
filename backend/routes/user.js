@@ -17,6 +17,7 @@ router.get('/employees', userController.DisplayEmployees);
 router.delete('/employee', requireAllFields(fields.deleteEmployeeFields), userController.DeleteEmployee);
 router.patch('/employee', requireAllFields(fields.editEmployeeFields), userController.EditEmployee);
 router.get('/employees-without-workspace', userController.DisplayWorkerWithoutWorkspace);
+router.get('/display-current-user-id', userController.DisplayCurrentUserId);
 router.use(userController.ValidateLogin);
 
 module.exports = router;
