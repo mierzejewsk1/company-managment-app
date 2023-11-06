@@ -5,11 +5,9 @@ import { LOCAL_STORAGE } from "./config/Enum";
 import Login from "./pages/Login";
 import ResetPassword from "./pages/ResetPassword";
 import GetNewPassword from "./pages/GetNewPassword";
-import Home from "./pages/Home";
-import AdministratorHomepage from "./pages/AdministratorHomepage";
+import Employees from "./pages/Employees";
 import WorkspaceManagmentPage from "./pages/WorkspaceManagmentPage";
 import NewsPage from "./pages/NewsPage";
-//import '../dist/output.css';
 
 function App() {
   const { user, isRestoreFinished, authActions } = useAuthContext();
@@ -22,7 +20,7 @@ function App() {
     <div className="App font-rem">
       <BrowserRouter>
         {isRestoreFinished ? (
-          <Routes> 
+          <Routes>
             <Route
               path="/"
               element={!user ? <Login /> : <Navigate to="/home" />}
@@ -37,15 +35,19 @@ function App() {
             />
             <Route
               path="/home"
-              element={user ? (user.userTypeName === LOCAL_STORAGE.ADMIN ? <AdministratorHomepage /> : <Navigate to="/news" />) : <Navigate to="/" />}
+              element={user ? <NewsPage /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/employees"
+              element={user && user.userTypeName === LOCAL_STORAGE.ADMIN ? <Employees /> : <Navigate to="/" />}
             />
             <Route
               path="/workspaces"
-              element={user ? (user.userTypeName === LOCAL_STORAGE.ADMIN ? <WorkspaceManagmentPage /> : (user.userTypeName === LOCAL_STORAGE.WORKER ? <NewsPage /> : <Navigate to="/" />)) : <Navigate to="/" />}
+              element={user && user.userTypeName === LOCAL_STORAGE.ADMIN ? <WorkspaceManagmentPage /> : <Navigate to="/" />}
             />
-           <Route
+            <Route
               path="/news"
-              element={user ? <NewsPage /> : <Navigate to="/" /> }
+              element={user ? <NewsPage /> : <Navigate to="/" />}
             />
             <Route
               path="*"

@@ -5,7 +5,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { useLogout } from "../hooks/useLogout";
 import Header from "../components/Header";
 
-const AdministratorHomepage = () => {
+const Employees = () => {
   const { user } = useAuthContext();
   const { logout } = useLogout();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -185,4 +185,4 @@ const AdministratorHomepage = () => {
   )
 }
 
-export default AdministratorHomepage
+export default Employees
