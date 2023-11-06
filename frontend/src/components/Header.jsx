@@ -19,7 +19,7 @@ const Header = (props) => {
           {user.userTypeName === LOCAL_STORAGE.ADMIN ? <Link to="/employees"><li className="hover:bg-white p-2 rounded-md duration-200 cursor-pointer">Pracownicy</li></Link> : null}
           {user.userTypeName === LOCAL_STORAGE.ADMIN ? <Link to="/workspaces"><li className="hover:bg-white p-2 rounded-md duration-200 cursor-pointer">Stanowiska</li></Link> : null}
           <Link to="/"><li className="hover:bg-white p-2 rounded-md duration-200 cursor-pointer">Wiadomości</li></Link>
-          <Link to="/"><li className="hover:bg-white p-2 rounded-md duration-200 cursor-pointer">Harmonogram</li></Link>
+          <Link to="/tasks"><li className="hover:bg-white p-2 rounded-md duration-200 cursor-pointer">Harmonogram</li></Link>
         </ul>
       </nav>
       <IoIosLogOut className="w-7 h-7 self-start hover:cursor-pointer" onClick={props.logout} />

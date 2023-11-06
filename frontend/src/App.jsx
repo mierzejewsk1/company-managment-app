@@ -8,6 +8,7 @@ import GetNewPassword from "./pages/GetNewPassword";
 import Employees from "./pages/Employees";
 import WorkspaceManagmentPage from "./pages/WorkspaceManagmentPage";
 import NewsPage from "./pages/NewsPage";
+import Tasks from "./pages/Tasks";
 
 function App() {
   const { user, isRestoreFinished, authActions } = useAuthContext();
@@ -48,6 +49,10 @@ function App() {
             <Route
               path="/news"
               element={user ? <NewsPage /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/tasks"
+              element={user ? <Tasks /> : <Navigate to="/" />}
             />
             <Route
               path="*"
