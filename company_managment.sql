@@ -168,33 +168,30 @@ INSERT INTO `o_workspaces` (`workspaceID`, `userID`, `workspaceNumber`, `isAvail
 
 -- Tabela o_tasks
 
-CREATE TABLE o_tasks (
-    taskID INT AUTO_INCREMENT PRIMARY KEY,
-    taskDescription VARCHAR(255) NOT NULL,
-    taskEndDate DATE,
-    userID INT,
-    taskState TINYINT,
-    FOREIGN KEY (userID) REFERENCES o_users(userID)
-);
+CREATE TABLE `o_tasks` (
+  `taskID` int(11) NOT NULL,
+  `taskDescription` varchar(255) NOT NULL,
+  `taskEndDate` text DEFAULT NULL,
+  `userID` int(11) DEFAULT NULL,
+  `taskState` tinyint(4) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `o_tasks`
+--
 
-INSERT INTO o_tasks (taskDescription, taskEndDate, userID, taskState) VALUES
-('Opis zadania 1 dla user1', '2023-11-10', 1, 0),
-('Opis zadania 2 dla user1', '2023-11-15', 1, 1),
-('Opis zadania 1 dla user2', '2023-11-12', 2, 0),
-('Opis zadania 2 dla user2', '2023-11-17', 2, 1),
-('Opis zadania 1 dla user3', '2023-11-13', 3, 0),
-('Opis zadania 2 dla user3', '2023-11-18', 3, 1),
-('Opis zadania 1 dla user4', '2023-11-14', 4, 0),
-('Opis zadania 2 dla user4', '2023-11-19', 4, 1),
-('Opis zadania 1 dla user5', '2023-11-15', 7, 0),
-('Opis zadania 2 dla user5', '2023-11-20', 7, 1),
-('Opis zadania 1 dla user6', '2023-11-16', 8, 0),
-('Opis zadania 2 dla user6', '2023-11-21', 8, 1),
-('Opis zadania 1 dla testowy', '2023-11-17', 14, 0),
-('Opis zadania 2 dla testowy', '2023-11-22', 14, 1),
-('Opis zadania 1 dla pies', '2023-11-18', 15, 0),
-('Opis zadania 2 dla pies', '2023-11-23', 15, 1);
+INSERT INTO `o_tasks` (`taskID`, `taskDescription`, `taskEndDate`, `userID`, `taskState`) VALUES
+(1, 'Opis zadania 1 dla user1', '10.11.2023', 1, 0),
+(2, 'Opis zadania 2 dla user1', '15.11.2023', 1, 1),
+(3, 'Opis zadania 1 dla user2', '12.11.2023', 2, 0),
+(4, 'Opis zadania 2 dla user2', '17.11.2023', 2, 1),
+(5, 'Opis zadania 1 dla user3', '13.11.2023', 3, 0),
+(6, 'Opis zadania 2 dla user3', '18.11.2023', 3, 1),
+(7, 'Opis zadania 1 dla user4', '14.11.2023', 4, 0),
+(8, 'Opis zadania 2 dla user4', '19.11.2023', 4, 1),
+(13, 'Opis zadania 1 dla testowy', '17.11.2023', 14, 1),
+(20, 'wefwef', '08.11.2023', 1, 1),
+(21, 'oznacz jako wykonane bo to testu', '24.11.2023', 14, 0);
 
 
 --

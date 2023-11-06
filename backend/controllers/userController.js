@@ -250,6 +250,15 @@ const DisplayWorkerWithoutWorkspace = async (req, res) => {
     }
 };
 
+const DisplayCurrentUserId = async (req, res) => {
+    const userID = req.user.userID;
+    try {
+        return res.status(StatusCodeEnum.OK).json({ userID });
+    } catch (error) {
+        console.error(error);
+        return res.setHeader(HeaderEnum.RESPONSE_HEADER, ErrorCodeEnum.SERVER_ERROR).status(StatusCodeEnum.INTERNAL_SERVER_ERROR).send();
+    }
+};
 
 
 module.exports = {
@@ -263,4 +272,5 @@ module.exports = {
     DeleteEmployee,
     EditEmployee,
     DisplayWorkerWithoutWorkspace,
+    DisplayCurrentUserId,
 }
