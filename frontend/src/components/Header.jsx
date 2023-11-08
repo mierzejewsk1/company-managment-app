@@ -18,7 +18,7 @@ const Header = (props) => {
           <Link to="/news"><li className="hover:bg-white p-2 rounded-md duration-200 cursor-pointer">Strona główna</li></Link>
           {user.userTypeName === LOCAL_STORAGE.ADMIN ? <Link to="/employees"><li className="hover:bg-white p-2 rounded-md duration-200 cursor-pointer">Pracownicy</li></Link> : null}
           {user.userTypeName === LOCAL_STORAGE.ADMIN ? <Link to="/workspaces"><li className="hover:bg-white p-2 rounded-md duration-200 cursor-pointer">Stanowiska</li></Link> : null}
-          <Link to="/"><li className="hover:bg-white p-2 rounded-md duration-200 cursor-pointer">Wiadomości</li></Link>
+          <Link to="/messages"><li className="hover:bg-white p-2 rounded-md duration-200 cursor-pointer">Wiadomości</li></Link>
           <Link to="/tasks"><li className="hover:bg-white p-2 rounded-md duration-200 cursor-pointer">Harmonogram</li></Link>
         </ul>
       </nav>
