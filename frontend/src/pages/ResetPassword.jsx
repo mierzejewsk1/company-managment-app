@@ -11,6 +11,7 @@ const ResetPassword = () => {
     const response = await fetchData("/user/send-reset-password-email-html", "POST", { email }, null, false);
     if (response[1] !== SERVER_CODE.OK) {
       setMsg(response[2]);
+      setEmail("");
     }
   };
 

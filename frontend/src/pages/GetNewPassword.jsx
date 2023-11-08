@@ -6,20 +6,20 @@ import { useLocation } from 'react-router-dom';
 const GetNewPassword = () => {
   const query = new URLSearchParams(useLocation().search);
   const resetToken = query.get('token');
-  const [password, setPassword] = useState("");
-  const [password2, setPassword2] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [newPassword2, setNewPassword2] = useState("");
   const [msg, setMsg] = useState("");
 
   const ResetPassword = async (e) => {
     e.preventDefault();
-    const response = await fetchData("/user/reset-password", "PATCH", { resetToken, password, password2 }, null, false);
+    const response = await fetchData("/user/reset-password", "PATCH", { resetToken, newPassword, newPassword2 }, null, false);
     if (response[1] !== SERVER_CODE.OK) {
       setMsg(response[2]);
     } else {
       window.location.href = '/';
     }
-    setPassword("");
-    setPassword2("");
+    setNewPassword("");
+    setNewPassword2("");
 
   };
   return (
@@ -35,12 +35,12 @@ const GetNewPassword = () => {
           <label className="w-full my-2 " htmlFor="password">Nowe hasło: </label>
           <br />
           <input
-            className="ww-full my-2 mb-5 p-1 bg-gray-300 rounded-md p-2 border border-gray-400"
+            className="w-full my-2 mb-5 p-1 bg-gray-300 rounded-md p-2 border border-gray-400"
             type="password"
             id="password"
             name="password"
             placeholder="hasło"
-            onChange={(e) => { setPassword(e.target.value); }}
+            onChange={(e) => { setNewPassword(e.target.value); }}
             required />
           <br />
           <label className="w-full my-2" htmlFor="password2">Powtórz hasło: </label>
@@ -51,7 +51,7 @@ const GetNewPassword = () => {
             id="password"
             name="password2"
             placeholder="hasło"
-            onChange={(e) => { setPassword2(e.target.value); }}
+            onChange={(e) => { setNewPassword2(e.target.value); }}
             required />
           <br />
           <input className="w-full mx-auto border px-2 py-2 cursor-pointer bg-green-600 hover:bg-green-700 duration-200 rounded-md text-gray-200" type="submit" value="Zmień" />
